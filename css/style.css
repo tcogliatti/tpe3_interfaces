@@ -28,11 +28,11 @@ body {
 
 #cielo {
     height: 80%;
-    background: url("../images/sprite_explosion_fx_0001.png") repeat-x;
+    background: url("../img/sky.png") repeat-x;
     background-size: 1280px 80%;
     top: -28%;
     position: absolute;
-    animation: sky 55s linear infinite;
+    animation: sky 180s linear infinite;
     /* filter: hue-rotate(30deg) brightness(50%); */
     animation: nocheDia 25s easy infinite;
     z-index: 1;
@@ -40,7 +40,7 @@ body {
 
 @keyframes sky {
     0% {
-    background-position: 0;
+        background-position: 0;
     }
 
     100% {
@@ -55,18 +55,6 @@ body {
         filter: hue-rotate(0deg) brightness(100%);
     }
 }
-
-#flatMountain{
-    width: 100em;
-    height: 100px;
-    position: absolute;
-    z-index: 4;
-    top: 19.5%;
-    background: url('../img/flat_mountain.png');
-    background-size: 1997px 100%;
-    animation: flatMountain 31s linear infinite;
-    filter: brightness(75%);
-}
 #farMountain{
     width: 100em;
     height: 100px;
@@ -75,9 +63,20 @@ body {
     top: 19%;
     background: url('../img/far_mountain.png');
     background-size: 1997px 100%;
-    animation: flatMountain 40s linear infinite;
+    animation: flatMountain 150s linear infinite;
     filter: brightness(75%);
 
+}
+#flatMountain{
+    width: 100em;
+    height: 100px;
+    position: absolute;
+    z-index: 4;
+    top: 19.5%;
+    background: url('../img/flat_mountain.png');
+    background-size: 1997px 100%;
+    animation: flatMountain 110s linear infinite;
+    filter: brightness(75%);
 }
 @keyframes flatMountain {
     0% {
@@ -88,38 +87,167 @@ body {
         background-position: 1997px
     }
 }
-
-#piso {
-    height: 20%;
-    background: url("../images/floor.png") repeat-x;
-    background-size: 831px 100%;
-    animation: floor 4s linear infinite;
+#stones1{
+    width: 100%;
+    /* width: calc(12000px * 0.08); */
+    height: calc(312px * 0.08);
     position: absolute;
-    bottom: 0px;
-    z-index: 0;
+    z-index: 5;
+    top: 34%;
+    background: url('../img/stones_background_1.png') repeat-x;
+    background-size: calc(12000px * 0.08) calc(312px * 0.08);
+    animation: stones1 50s linear infinite;
+    filter: brightness(60%);
+    
 }
-@keyframes floor {
+@keyframes stones1 {
     0% {
         background-position: 0
     }
 
     100% {
-        background-position: 831px
+        background-position: calc(12000px * 0.08)
     }
 }
+#stones2{
+    width: 100%;
+    /* width: calc(10791px * 0.15); */
+    height: calc(296px * 0.15);
+    position: absolute;
+    z-index: 6;
+    top: 37%;
+    background: url('../img/stones_background_2.png') repeat-x;
+    background-size: calc(10791px * 0.15) calc(296px * 0.15);
+    animation: stones2 50s linear infinite;
+    filter: brightness(70%);
+}
+@keyframes stones2 {
+    0% {
+        background-position: 0
+    }
+
+    100% {
+        background-position: calc(10791px * 0.15)
+    }
+}
+#stones3{
+    width: 100%;
+    /* width: calc(9491px * 0.20); */
+    height: calc(305px * 0.20);
+    position: absolute;
+    z-index: 7;
+    top: 45%;
+    background: url('../img/stones_background_3.png') repeat-x;
+    background-size: calc(9491px * 0.20) calc(305px * 0.20);
+    animation: stones3 30s linear infinite;
+    filter: brightness(84%);
+}
+@keyframes stones3 {
+    0% {
+        background-position: 0
+    }
+
+    100% {
+        background-position: calc(9491px * 0.20)
+    }
+}
+#stones4{
+    /* width: calc(7007px * 0.50); */
+    width: 100%;
+    height: calc(336px * 0.50);
+    position: absolute;
+    z-index: 8;
+    background-position: 0;
+    top: 45%;
+    background: url('../img/stones_background_4.png') repeat-x;
+    background-size: calc(7007px * 0.50) calc(336px * 0.50);
+    animation: stones4 28s linear infinite;
+    
+}
+@keyframes stones4 {
+    0% {
+        background-position: 0;
+    }
+
+    100% {
+        background-position: calc(7007px * 0.50);
+    }
+}
+
+
+#piso {
+    height: 109px;
+    width: 3024px;
+    background: url("../img/desert_route.png") repeat-x;
+    background-size: 3024px 109px;
+    animation: floor 4s linear infinite;
+    position: absolute;
+    bottom: 0px;
+    z-index: 9;
+    animation: piso 9s linear infinite;
+
+}
+@keyframes piso {
+    0% {
+        background-position: 0
+    }
+
+    100% {
+        background-position: 3024px
+    }
+}
+
 #ground{
     z-index: 3;
     position: absolute;
     top: 34%;
-    height: 50%;
+    height: 55%;
     width:100%;
     background: linear-gradient(180deg, rgba(174,123,70,1) 0%, rgba(236,193,148,1) 100%);
 }
+/* .stones{
+    background: url("../img/stones_background.png") repeat-x;
+    position: fixed;
+    background-size: 135px 2670px;
+    background-size: cover;
+    animation: stones 4s linear infinite;
+    z-index: 10;
+} */
+/* @keyframes stones {
+    0% {
+        left: -50px;
+    }
 
+    100% {
+        left: 110vh;
+    }
+} */
 
 /*
     Personajes
 */
+#lab-movil{
+    width: calc(376px * 2);
+    height: calc(140px * 2);
+    z-index: 8;
+    position: absolute;
+    background-size: calc(140px * 2) calc(376px * 2);
+    bottom: 7%;
+    right: 50px;
+    background: url("../img/lab_movil.png");
+    background-repeat: no-repeat;
+    /* transform: translateX(300px); */
+    animation: piso 1.9s linear infinite;
+}
+/* @keyframes piso {
+    0% {
+        transform: translate(0px);
+    }
+
+    100% {
+        transform: translate(500px);
+    }
+} */
 
 #personaje {
     width: 180px;
@@ -127,7 +255,7 @@ body {
     z-index: 10;
     position: absolute;
     background-size: 216px 900px;
-    bottom: 18%;
+    bottom: 12%;
     right: 50px;
     background: url("../img/walters-walk.png") repeat-x;
 }

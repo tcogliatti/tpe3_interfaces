@@ -318,6 +318,30 @@ body {
     }
 }
 
+.cliente {
+    z-index: 10;
+    position: absolute;
+    bottom: 12%; 
+    width: 134px; height: 216px;
+    background-size: 216px 1072px;
+    animation: enemigo 5.5s forwards linear, correrCliente .8s steps(8) infinite;
+    background: url("../img/client.png") ;
+    background-repeat: no-repeat;
+    /* transform: scale(2); */
+    border-radius: 20%;
+}
+
+@keyframes correrCliente {
+    0% {
+        background-position: 0px
+
+    }
+
+    100% {
+        background-position: -1072px
+    }
+}
+
 .things{
     position: absolute;
     bottom: 13%;
@@ -341,7 +365,51 @@ body {
     /* transform: scale(0.5); */
     background: url("../img/meth.png") ;
     background-size: contain;
-    background-repeat: repeat;
+    background-repeat: no-repeat;
     z-index: 9;
+}
+#methBar{
+    position: absolute;
+    width: 125px; height: 44px;
+    background: url("../img/methScore.png") ;
+    background-size: 125px 44px;
+    background-repeat: no-repeat;
+    top: 20px;
+    left: 20px;
+    z-index: 20;
+}
+/* #methBarInside{
+    position: absolute;
+    width: 118px; height: 11px;
+    background: url("../img/methBarInside.png") ;
+    background-size: 118px 11px;
+    background-repeat: no-repeat;
+    top: 37px;
+    left: 63px;
+    z-index: 19;
+    overflow: hidden;
+} */
+#moneyBar{
+    position: absolute;
+    width: 166px; height: 44px;
+    background: url("../img/moneyBar.png") ;
+    background-size: 166px 44px;
+    background-repeat: no-repeat;
+    top: 65px;
+    left: 20px;
+    z-index: 20;
+    /* background-position: -118px; */
+}
+#moneyBarInside{
+    position: absolute;
+    width: 118px; height: 11px;
+    background: url("../img/moneyBarInside.png") ;
+    background-size: 118px 11px;
+    background-repeat: no-repeat;
+    top: 83px;
+    left: 63px;
+    z-index: 19;
+    overflow: hidden;
+    /* background-position: -118px; */
 }
 

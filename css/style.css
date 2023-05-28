@@ -96,7 +96,7 @@ body {
     top: 34%;
     background: url('../img/stones_background_1.png') repeat-x;
     background-size: calc(12000px * 0.08) calc(312px * 0.08);
-    animation: stones1 50s linear infinite;
+    animation: stones1 49s linear infinite;
     filter: brightness(60%);
     
 }
@@ -184,7 +184,7 @@ body {
     position: absolute;
     bottom: 0px;
     z-index: 9;
-    animation: piso 9s linear infinite;
+    animation: piso 12s linear infinite;
 
 }
 @keyframes piso {
@@ -205,23 +205,6 @@ body {
     width:100%;
     background: linear-gradient(180deg, rgba(174,123,70,1) 0%, rgba(236,193,148,1) 100%);
 }
-/* .stones{
-    background: url("../img/stones_background.png") repeat-x;
-    position: fixed;
-    background-size: 135px 2670px;
-    background-size: cover;
-    animation: stones 4s linear infinite;
-    z-index: 10;
-} */
-/* @keyframes stones {
-    0% {
-        left: -50px;
-    }
-
-    100% {
-        left: 110vh;
-    }
-} */
 
 /*
     Personajes
@@ -250,8 +233,7 @@ body {
 } */
 
 #personaje {
-    width: 180px;
-    height: 216px;
+    width: 180px; height: 216px;
     z-index: 10;
     position: absolute;
     background-size: 216px 900px;
@@ -301,49 +283,27 @@ body {
         background-position: -900px
     }
 }
-
-
-/* #personaje {
-    width: 180px;
-    height: 216px;
-    z-index: 1;
-    position: absolute;
-    background-size: 216px 900px;
-    bottom: 18%;
-    right: 50px;
-    background: url("../img/sources/walters-walk.png") repeat-x;
-}
-.correr {
-    animation: correr .6s steps(5) infinite reverse;
-} */
-
-
-
-
 .enemigo {
     z-index: 10;
     position: absolute;
-    bottom: 20%;
-    /* width: calc(110px * 1.5); */
-    width: 110px;
-    /* height: calc(121px * 1.5); */
-    height: 121px;
-    /* background-size: calc(121px * 1.5) calc(600px * 1.5); */
-    background-size: 121px 600px;
-    /* background-color: black; */
-    animation: enemigo 2.5s forwards linear, correrEnemigo .6s steps(6) infinite;
-    /* animation: correrEnemigo .6s steps(6) infinite ; */
-    background: url("../img/enemie.png") ;
+    bottom: 20%; width: 88px;
+    height: 88px;
+    background-size: 88px 352px;
+    animation: enemigo 5.5s forwards linear, correrEnemigo .4s steps(4) infinite;
+    background: url("../img/jack.png") ;
+    background-repeat: no-repeat;
+    transform: scale(2);
+    border-radius: 20%;
 }
 
 @keyframes correrEnemigo {
     0% {
-        background-position: 660px
+        background-position: 0px
 
     }
 
     100% {
-        background-position: 0
+        background-position: -352px
     }
 }
 
@@ -358,5 +318,30 @@ body {
     }
 }
 
+.things{
+    position: absolute;
+    bottom: 13%;
+    animation: things 5.5s forwards linear;
 
+}
+
+@keyframes things {
+    from {
+        left: -5%;
+    }
+    to {
+        left: 100%;
+    }
+   
+}
+.meth{
+    width: calc(388px * 0.15);
+    height: calc(221px * 0.15);
+    /* background-size: 100px 50px; */
+    /* transform: scale(0.5); */
+    background: url("../img/meth.png") ;
+    background-size: contain;
+    background-repeat: repeat;
+    z-index: 9;
+}
 

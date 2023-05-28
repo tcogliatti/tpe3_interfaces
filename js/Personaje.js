@@ -1,11 +1,11 @@
 class Personaje {
 
     constructor() {
-
+        this.status = "none";
     }
 
     status() {
-        return ;
+        return this.status;
     }
 
 }

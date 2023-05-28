@@ -2,116 +2,161 @@
 let contenedor = document.querySelector('#contenedor');
 let ground = document.querySelector('#ground');
 
-const STONES = 15;
-let stonesArray = [];
-let runner = new Runner();
 
+//////////////////////////////////// SetUp variables globales ///////////////////
+const ENEMIES = 6;
+let enemiesArr = [];
+let runner = new Runner();
+let randomFrecuency = {'min': 1, 'max': 3.5};
+let frecuencyEnemy = getRandomNumber(randomFrecuency['min'], randomFrecuency['max']);
+let auxTimeEnemy = performance.now() + (frecuencyEnemy * 1000);
+const METH = 3;
+let methArr = [];
+let meth_multiplexor = 1.2;
+let auxTimeMeth = (performance.now() + (frecuencyEnemy * 1000)) * meth_multiplexor;
+const personaje = document.querySelector('#personaje');
+
+
+
+
+//////////////////////////////////// GameLoop ///////////////////////////////////
+/* cada 50 milisegundos verifica estado del juego */
+setInterval(gameLoop, 50);
+function gameLoop() {
+
+    // crea enemigos con frecuencia aleatoria
+    enemyCreator();
+
+    // crea meth con frecuencia aleatoria
+    methCreator();
+
+    // verifica si recolecta metanfetamina
+    colisionCheckMeth();
+
+    // verifica si recolecta metanfetamina
+    colisionCheckEnemy();
+
+    // verifica
+    objectCollector();
+
+
+}
+
+
+
+//////////////////////////////////// Personaje principal ////////////////////////
 document.addEventListener('keydown', () => {
     runner.saltar();
 });
 
 
 
-/* cada 50 milisegundos verifica estado del juego */
-setInterval(gameLoop, 50);
 
-
-
-/* cada 1 segundo genera un enemigo */
-setInterval(generarEnemigo, 1000);
-
-
-// setInterval(backgroundObjects, Math.random);
-
-/**
- * Chequear estado del runner y de los enemigos
- */
-function gameLoop() {
-
-    //console.log(runner.status())
-
-
+//////////////////////////////////// Enemigo ////////////////////////////////////
+// genera el array de enemigos
+for(let i = 0; i < ENEMIES; i++) {
+    enemiesArr[i] = new Enemigo();
 }
 
-
-function generarEnemigo() {
-    let enemigo = new Enemigo();
-}
-
-
-
-
-
-
-
-
-
-
-
-
-// backgroundObjects()
-
-// function backgroundObjects(){
-
-//     for (let i = 0; 1 < STONES; i++) {
-//         // setStone()
-//         console.log(i);
-//     }
-// }
-
-
-// let altura = ground.offsetHeight;
-// let ancho = ground.offsetWidth;
-// let initY = ground.offsetTop;
-// console.log('Alto', altura, "/ Ancho", ancho, '/init Y', initY);
-
-// let stone = document.createElement('div');
-// stone.style.bottom = `${initY+20}px`;
-// stone.style.width = '178px';
-// stone.style.height = '135px';
-// stone.style.animation = 'stones 10s linear infinite';
-// stone.classList.add("stones");
-// stone.style.transform = 'scale(0.1)';
-// stone.style.backgroundPosition = '178px';
-// ground.appendChild(stone)
-
-
-
-// function setStone(){
-//     // obtengo el alto del div ground sobre el que se posarán las piedras
-//     let altura = ground.offsetHeight;
-//     let ancho = ground.offsetWidth;
-//     let initY = ground.offsetTop
-
-//     console.log('Alto', altura, "/ Ancho", ancho, '/init Y', initY);
-//     // crea el elemento
-//     let stone = document.createElement('div');
-//     // asigan una altura ramdom
-
-//     // stone.style.left = '50px';
-//     stone.style.left = `${Math.floor(Math.random() * (100 + 1))}%`;
-//     stone.id = 'stoneID';
-//     stone.style.width = '178px';
-//     stone.style.height = '135px';
-//     stone.style.animation = 'stones 10s linear infinite';
-//     stone.classList.add("stones");
+function enemyCreator(){
+    if(performance.now() >= auxTimeEnemy){
+        for(let i = 0; i < ENEMIES; i++) {
+            if(enemiesArr[i].status == "none"){
+                enemiesArr[i].render(true);
+                break;
+            }
+        }
+        frecuencyEnemy = getRandomNumber(randomFrecuency['min'], randomFrecuency['max']);
+        auxTimeEnemy = performance.now() + (frecuencyEnemy * 1000);
+    }
     
-//     let stoneHeight = stone.offsetHeight;
-//     // let posY =  Math.random() * (altura);
-//     // let posY =  Math.floor(Math.random() * 38);
-//     let posY =  Math.floor(Math.random() * (63 - 26 + 1)) + 26;
-//     stone.style.top = `${posY}%`;
-//     let scale = ((posY-26) / 37)
-//     stone.style.transform = `scale(${scale})`;
-//     let spriteStone = 178 * 3;
-//     stone.style.backgroundPosition = `${spriteStone}px`;
+}
 
-//     ground.appendChild(stone)
-// }
-// setStone()
+//////////////////////////////////// Things ////////////////////////////////////
+// genera el array de enemigos
+for(let i = 0; i < METH; i++) {
+    methArr[i] = new Meth();
+}
 
-// setInterval(() => {
-// let stone = document.querySelector('#stoneID');
+function methCreator(){
+    if(performance.now() >= auxTimeMeth){
+        for(let i = 0; i < METH; i++) {
+            if(methArr[i].status == "none"){
+                methArr[i].render(true);
+                break;
+            }
+        }
+        let frecuency = getRandomNumber(randomFrecuency['min'], randomFrecuency['max']);
+        auxTimeMeth = (performance.now() + (frecuency * 1000)) * meth_multiplexor;
+    }
+    
+}
 
-//     stone.syle.left = `${stone.offsetLeft + 2}px`;
-// }, 100);
+//////////////////////////////////// Auxiliares ////////////////////////////////////
+
+function objectCollector(){
+    // enemies
+    enemiesArr.forEach((enemy) => {
+        if(enemy.status != "none")
+            if(enemy.getOffsetLeft() >= window.innerWidth){
+                enemy.render(false);
+            }
+    });
+
+    // meth
+    methArr.forEach((meth) => {
+        if(meth.status != "none")
+            if(meth.getOffsetLeft() >= window.innerWidth){
+                meth.render(false);
+            }
+    });
+}
+
+function getRandomNumber(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+function colisionCheckMeth(){
+    methArr.forEach((meth) => {
+        if(meth.status != "none"){
+            let div = meth.getDiv();
+            if(estanEnContacto(div, 0)){
+                // desaparecer metanfetamina
+                meth.render(false);
+                // efecto viasual
+                // efecto de sonido
+                // aumenta vidas en juego
+            }
+        }
+    });
+}
+
+function colisionCheckEnemy(){
+    enemiesArr.forEach((enemy) => {
+        if(enemy.status != "none"){
+            let div = enemy.getDiv();
+            if(estanEnContacto(div, 90)){
+                console.log('arrested');
+                // desaparecer metanfetamina
+                enemy.render(false);
+                // efecto viasual
+                // efecto de sonido
+                // aumenta vidas en juego
+            }
+        }
+    });
+}
+
+
+function estanEnContacto(objeto, tolerance) {
+    const rectObjeto = objeto.getBoundingClientRect();
+    const rectPersonaje = personaje.getBoundingClientRect();
+  
+    return !(
+        rectPersonaje.right   < rectObjeto.left     + tolerance    ||
+        rectPersonaje.left    > rectObjeto.right    - tolerance    ||
+        rectPersonaje.bottom  < rectObjeto.top      + tolerance               ||
+        rectPersonaje.top     > rectObjeto.bottom   - tolerance
+    );
+  }
+

@@ -13,10 +13,16 @@
 <body>
 
     <div id="contenedor">
-        <div id="methBar"><h1 id="methScore"></h1></div>
-        <div id="moneyBar"></div>
-        <!-- <div id="methBarInside"></div> -->
-        <div id="moneyBarInside"></div>
+        <!-- game controls -->
+        <button onclick="startGame()" style="z-index: 21;">Play</button>
+        <div id="methBar"><h1 id="methScore">0</h1></div>
+        <div id="moneyBar"><h1 id="moneyScore"></h1></div>
+        <div id="timeBar"><h1 id="timeScore"></h1></div>
+        <div id="lifeBar"></div>
+        <div id="lifeBarInside"></div>
+        <div id="lifeBarBackground"></div>
+
+        <!-- landscape elements -->
         <div id="farMountain"></div>
         <div id="flatMountain"></div>
         <div id="stones1"></div>
@@ -25,8 +31,10 @@
         <div id="stones4"></div>
         <div id="ground"></div>
         <div id="cielo"></div>
-        <div id="personaje" class="correr"></div>
         <div id="piso"></div>
+
+        <!-- charters elements -->
+        <div id="personaje" class="correr"></div>
         <!-- <div id="lab-movil"></div> -->
     </div>
 

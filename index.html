@@ -16,12 +16,63 @@
     <div class="background-start-screen" id="beginScreen">
         <div class="start-screen" id="startScreen">
             <div class="button-box">
-                <button onclick="startGame()" style="z-index: 21;">Play</button>
-                <button>How to Play</button>
+                <button onclick="startGame()">Play</button>
+                <button onclick="showHowToPlay()">How to Play</button>
             </div>
         </div>
-        <div class="explanations" id="explanations">
-
+        <div  class="explanations" id="explanations">
+            <div>
+                <div class="imgExpl">
+                    <img src="./img/methScore.png" alt="">
+                </div>
+                <p> El Gordo Walter es tan enférmamente fanático de Braking Bad que quiere vivir la vida de Walter White. 
+                    A diferencia de Walter White, Blanco no fabrica metanfetamina, en su lugar debe confiar en su suerte e ir recogiendo el producto que encuentra en el camino de su vida al margen de la ley.
+                </p>
+                <div class="imgExpl">
+                    <img src="./img/meth.png" alt="">
+                </div>
+            </div>
+            <div>
+                <div class="imgExpl">
+                    <img src="./img/lifeBar.png" alt="">
+                </div>
+                <p>
+                    El objetivo del juego consiste en recolectar metanfetamina y vendera a los clientes. 
+                    El juego comienza con 5 vidas y termina cuando te quedas sin ninguna. 
+                    Cuida tu vida porque es la única que tienes y no existe forma de recuperar lo perdido.
+                </p>
+            </div>
+            <div>
+                <div class="imgExpl">
+                    <img src="./img/client-simple.png" alt="">
+                </div>
+                <p>Ten cuidado con los compradores de tu produco! suelen andar muy tensos por sus consumos problematicos
+                    y su te llegan a acarrar sin su dosis para comprar te harán perder una vida. Si estas sin producto procura
+                    esquivar a esos sucios compradores saltandolos por ensima presionando cualquier tecla. El precio de tu producto es de $<span></span>
+                </p>
+                <div class="imgExpl">
+                    <img src="./img/moneyScore.png" alt="">
+                </div>
+            </div>
+            <div>
+                <p>
+                    Naturalmente, el enemigo del Gordo es la policía. Cada vez que un policía te toque puedes perder una vida. 
+                    Evita este problema de dos maneras: la primera es esquivando a esos cerdos saltandolos por ensima. La segunda es 
+                    dandole lo que ellos quieren, un jugoso soborno de $<span></span>. Si no llegas a tener el dinero suficiente, perderás una vida de cualquier manera.
+                </p>    
+                <div class="imgExpl">
+                    <img src="./img/Marine_run_sigle.png" alt="">
+                </div>
+            </div>
+            <p>
+                Al final del juego tendras un tablero de puntos. Cada recoleccion de metanfetamina realizada se bonifica con <span></span> puntos.
+                Cada venta de Meta con <span></span> y los sobornos con <span></span>. El dinero conseguido se bonifica con <span></span> y cada segundo
+                que conseguiste mantenerte con vida con <span></span>.
+            </p>        
+            <div class="button-box-expln">
+                <button onclick="startGame()">Jugar</button>
+                <button onclick="renderScreens('start')">Volver</button>
+            </div>
         </div>
         <div class="game-over" id="gameOver">
             <h1 class="game-over-title">Game Over</h1>
@@ -38,7 +89,7 @@
             <p>Time Score: <span id="timeScoreShow"></span></p>
             <h2>Final Score: <span id="finalScore"></span></h2>
             <div>
-                <button onclick="startGame()" style="z-index: 21;">Play Again</button>
+                <button onclick="startGame()">Play Again</button>
             </div>
         </div>
     </div>

@@ -486,7 +486,7 @@ function renderScreens(screen){
             break;
         case "explanations":
             beginScreen.style.display   = 'block';
-            explanations.style.display  = 'block';
+            explanations.style.display  = 'flex';
             gameOver.style.display      = 'none';
             startScreen.style.display   = 'none';
             break;
@@ -524,6 +524,19 @@ function showPonits(){
     let timeTP = (gameTime['min'] * 60 + gameTime['seg']) * timeSecondsPoints;
     timeScoreShow.innerHTML = timeTP;
     finalScore.innerHTML = methTP + moneyTP + briberyTP + timeTP
+}
+
+function showHowToPlay(){
+    renderScreens("explanations")
+    let data = document.querySelectorAll('#explanations span');
+    data[0].innerHTML = methCost;
+    data[1].innerHTML = policeCometa;
+    data[2].innerHTML = methPoints;
+    data[3].innerHTML = methSells;
+    data[4].innerHTML = briberyPoints;
+    data[5].innerHTML = moneyPoints;
+    data[6].innerHTML = timeSecondsPoints;
+
 }
 
 stopAnimations();

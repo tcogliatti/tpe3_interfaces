@@ -78,9 +78,22 @@ const methSells         = 300;
 const briberyPoints     = 3000;
 const timeSecondsPoints = 5;
 
+// SOUND SETUP
+const methSound = new Audio('../sound/meth.mp3');
+const ouch1Sound = new Audio('../sound/ouch.mp3');
+const sobornoSound = new Audio('../sound/soborno.mp3');
+const sellSound = new Audio('../sound/sell.mp3');
+const gameMusic = new Audio('../sound/gameMusic.mp3');
+gameMusic.looop = true;
+const wellcameMusic = new Audio('../sound/wellcameMusic.mp3');
+wellcameMusic.loop = true;
 
-
-
+// SPEED GAME SETUP
+const initSpeedGame = 5.5;
+const frecencyIncrese = 5000;
+// const frecencyIncrese = 15000;
+const amountIncrese = 0.3;
+let speedGame = initSpeedGame;
 
 //////////////////////////////////// GAME ///////////////////////////////////
 /* cada 50 milisegundos verifica estado del juego */
@@ -130,17 +143,39 @@ function gameControl() {
         stopGame()
     }
 }
- 
+
+/**
+ * Determina la velociodad del juego y la incrementa a medida que corre el tiempo
+ */
+let speedGameInterval = setInterval(speedGameFunction, frecencyIncrese);
+function speedGameFunction() {
+    speedGame = speedGame + amountIncrese;
+    speedGame = Math.ceil(speedGame * 10) / 10; 
+    // console.log(speedGame, document.documentElement.style.getPropertyValue('--speed-animation'));
+    // document.documentElement.style.setProperty('--speed-animation', `${speedGame}s`);
+}
+
 function startGame() {
+    // SPEED GAME 
+    speedGame = initSpeedGame;
+
+    // INICIAR MUSICA
+    gameMusic.currentTime = 0;
+    gameMusic.play();
+    wellcameMusic.pause();
+
+    // HIDE BEGIN SCREEN
     beginScreen.style.display = "none";
+
     // TIME SETUP
     startTime = performance.now();
 
     // START INTERVALOS
     game = setInterval(gameLoop, 50);
     timerInterval = setInterval(checkTime, 10);
+    speedGameInterval = setInterval(speedGameFunction, frecencyIncrese);
 
-    // DETENER TODAS LAS ANIMACIONES
+    // INICIAR TODAS LAS ANIMACIONES
     let animacion = farMountain.getAnimations();
     startAnimation(animacion);
     animacion = flatMountain.getAnimations();
@@ -172,7 +207,7 @@ function startGame() {
 
     // MONEY SETUP
     totalMoney = 0;
-    moneyStock = 0;
+    moneyStock = 1000;
     moneyScore.innerHTML = moneyStock;
 
     // LIFE SETUP
@@ -187,6 +222,9 @@ function startGame() {
 }
 
 function stopGame() {
+    gameMusic.pause();
+    wellcameMusic.currentTime = 0;
+    wellcameMusic.play();
     stopAnimations();
     renderScreens("game-over");
 }
@@ -195,6 +233,7 @@ function stopAnimations(){
   // DETENER INTERVALOS
   clearInterval(game);
   clearInterval(timerInterval);
+  clearInterval(speedGameInterval);
 
   // DETENER TODAS LAS ANIMACIONES
   let animacion = farMountain.getAnimations();
@@ -352,7 +391,9 @@ function colisionCheckMeth() {
                 methStock++;
                 methScore.innerHTML = methStock;
                 // efecto viasual
+
                 // efecto de sonido
+                methSound.play();
             }
 
         }
@@ -374,11 +415,12 @@ function colisionCheckEnemy() {
                     totalSoborno++;
                     moneyStock = moneyStock - policeCometa;
                     moneyScore.innerHTML = moneyStock;
+                    sobornoSound.play();
                 } else {
                     looseLife();
+                    ouch1Sound.play();
                 }
                 // efecto viasual
-                // efecto de sonido
             }
         }
     });
@@ -405,12 +447,16 @@ function colisionCheckClient() {
                     totalMoney = totalMoney + methCost;
                     moneyStock = moneyStock + methCost;
                     moneyScore.innerHTML = moneyStock;
+                    
+                    // sonido de venta 
+                    sellSound.play();
                 } else {
                     looseLife();
+                    ouch1Sound.play();
                 }
 
                 // efecto viasual
-                // efecto de sonido
+                
             }
         }
     });
@@ -512,8 +558,10 @@ function showPonits(){
     let methTP = totalMeth * methPoints;
     finalMethScore.innerHTML = methTP;
 
-    moneyWin.innerHTML = totalMoney;
-    let moneyTP = totalMoney * moneyPoints;
+    moneyWin.innerHTML = moneyStock;
+    // moneyWin.innerHTML = totalMoney;
+    let moneyTP = moneyStock * moneyPoints;
+    // let moneyTP = totalMoney * moneyPoints;
     finalMoneyScore.innerHTML = moneyTP;
 
     policeBribery.innerHTML = totalSoborno;
@@ -539,7 +587,10 @@ function showHowToPlay(){
 
 }
 
+
 stopAnimations();
 // renderScreens('game-over');
 renderScreens('start');
+
+
 

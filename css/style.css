@@ -1,9 +1,28 @@
-@import url(./PublicPixel-z84yD.ttf);
 
+/*
+*   FONTS
+*/
+@font-face {
+    font-family: 'pixel-font';
+    src: url('PublicPixel-z84yD.ttf') format('truetype');
+  }
 
+/*
+*   VARIABLES
+*/
+:root {
+    --speed-animation: 5.5s;
+  }
+
+/*
+* ESTILOS GLOBALES
+*/
 body {
     margin: 0;
     max-height: 100%;
+}
+body, button {
+    font-family: 'pixel-font', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 #contenedor,
@@ -22,7 +41,12 @@ body {
     overflow-y: hidden;
     overflow-x: hidden;
 }
-
+.ml{
+    margin-left: 10px;
+}
+.mr{
+    margin-right: 10px;
+}
 
 /***************************************************
  *
@@ -38,7 +62,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
     color: rgb(45, 42, 34);
 }
 
@@ -59,6 +83,7 @@ body {
     border-radius: 5px;
 }
 .game-over{
+    font-size: 12px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -85,9 +110,9 @@ body {
     justify-content: center;
     width: 100%;
 }
-.game-over button{
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
+/* .game-over button{
+     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+} */
 .game-over button:hover{
     transform: scale(1.05);
 }
@@ -104,6 +129,7 @@ body {
 }
 
 .explanations{
+    font-size: 12px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -153,12 +179,12 @@ button {
     padding: 10px;
     width: 250px;
     margin: 20px;
-    font-family: pixce;
-    font-size: 24px;
+    /* font-family: pixce; */
+    font-size: 16px;
     border: 3px solid rgb(93, 88, 73);
     background: rgba(255, 255, 255, 0.616);
     color: rgb(93, 88, 73);
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
 }
 button:hover{
     transform: scale(1.05);
@@ -444,7 +470,7 @@ button:hover{
     width: 88px;
     height: 88px;
     background-size: 88px 352px;
-    animation: enemigo 5.5s forwards linear, correrEnemigo .4s steps(4) infinite;
+    animation: enemigo var(--speed-animation) forwards linear, correrEnemigo .4s steps(4) infinite;
     background: url("../img/jack.png");
     background-repeat: no-repeat;
     transform: scale(2);
@@ -480,7 +506,7 @@ button:hover{
     width: 134px;
     height: 216px;
     background-size: 216px 1072px;
-    animation: enemigo 5.5s forwards linear, correrCliente .8s steps(8) infinite;
+    animation: enemigo var(--speed-animation) forwards linear, correrCliente .8s steps(8) infinite;
     background: url("../img/client.png");
     background-repeat: no-repeat;
     border-radius: 20%;
@@ -499,7 +525,7 @@ button:hover{
 .things {
     position: absolute;
     bottom: 13%;
-    animation: things 5.5s forwards linear;
+    animation: things var(--speed-animation) forwards linear;
 
 }
 
@@ -545,12 +571,12 @@ button:hover{
 
 #methScore {
     position: absolute;
-    width: 55px;
-    top: -8px;
+    width: 60px;
+    top: 0px;
     left: 52px;
     color: rgb(146, 209, 227);
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: 24px;
+    /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+    font-size: 18px;
     z-index: 21;
     text-align: center;
 }
@@ -558,33 +584,33 @@ button:hover{
 #timeScore {
     position: absolute;
     width: 55px;
-    top: -8px;
-    left: 52px;
+    top: 0px;
+    left: 63px;
     color: rgb(146, 209, 227);
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: 24px;
+    /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+    font-size: 18px;
     z-index: 21;
     text-align: center;
 }
 
 #moneyScore {
     position: absolute;
-    width: 82px;
-    top: -8px;
+    width: 135px;
+    top: 0px;
     left: 52px;
     color: rgb(146, 209, 227);
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: 24px;
+    /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+    font-size: 18px;
     z-index: 21;
     text-align: center;
 }
 
 #moneyBar {
     position: absolute;
-    width: 150px;
+    width: 200px;
     height: 44px;
     background: url("../img/moneyScore.png");
-    background-size: 150px 44px;
+    background-size: cover;
     background-repeat: no-repeat;
     top: 65px;
     left: 20px;
@@ -593,10 +619,10 @@ button:hover{
 
 #timeBar {
     position: absolute;
-    width: 173px;
+    width: 230px;
     height: 44px;
     background: url("../img/timeBar.png");
-    background-size: 173px 44px;
+    background-size: cover;
     background-repeat: no-repeat;
     top: 20px;
     right: 20px;
@@ -611,7 +637,7 @@ button:hover{
     background-size: 173px 44px;
     background-repeat: no-repeat;
     top: 65px;
-    right: 20px;
+    right: 79px;
     z-index: 20;
 }
 
@@ -623,7 +649,7 @@ button:hover{
     background-size: 118px 11px;
     background-repeat: no-repeat;
     top: 81px;
-    right: 30px;
+    right: 90px;
     z-index: 19;
     overflow: hidden;
 }
@@ -636,7 +662,7 @@ button:hover{
     background-size: 118px 11px;
     background-repeat: no-repeat;
     top: 81px;
-    right: 30px;
+    right:90px;
     z-index: 18;
     overflow: hidden;
 

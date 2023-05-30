@@ -23,6 +23,7 @@ body {
     overflow-x: hidden;
 }
 
+
 /***************************************************
  *
  *  GAME WELLCOME, EXPLANATION AND GAME OVER SCREENS
@@ -136,7 +137,9 @@ body {
     display: flex;
     justify-content: center;
 }
-
+.explanations p{
+    text-align: justify!important;
+}
 .button-box {
     top: 80%;
     position: absolute;

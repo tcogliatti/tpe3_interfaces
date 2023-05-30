@@ -518,12 +518,12 @@ function showPonits(){
 
     policeBribery.innerHTML = totalSoborno;
     let briberyTP = totalSoborno * briberyPoints;
-    briberyScore.innerHTML = briberyTP;
+    briberyScore.innerHTML = '-'+briberyTP;
 
     gameTotalTime.innerHTML = `${padTime(gameTime['min'])}:${padTime(gameTime['seg'])}:${gameTime['ms']}`;
     let timeTP = (gameTime['min'] * 60 + gameTime['seg']) * timeSecondsPoints;
     timeScoreShow.innerHTML = timeTP;
-    finalScore.innerHTML = methTP + moneyTP + briberyTP + timeTP
+    finalScore.innerHTML = methTP + moneyTP - briberyTP + timeTP
 }
 
 function showHowToPlay(){

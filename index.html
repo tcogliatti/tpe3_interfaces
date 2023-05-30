@@ -16,8 +16,8 @@
     <div class="background-start-screen" id="beginScreen">
         <div class="start-screen" id="startScreen">
             <div class="button-box">
-                <button onclick="startGame()">Play</button>
-                <button onclick="showHowToPlay()">How to Play</button>
+                <button onclick="startGame()">Jugar Ahora</button>
+                <button onclick="showHowToPlay()">Instrucciones</button>
             </div>
         </div>
         <div  class="explanations" id="explanations">
@@ -64,11 +64,16 @@
                     <img src="./img/Marine_run_sigle.png" alt="">
                 </div>
             </div>
-            <p>
-                Al final del juego tendras un tablero de puntos. Cada recoleccion de metanfetamina realizada se bonifica con <span></span> puntos.
-                Cada venta de Meta con <span></span> y los sobornos con <span></span>. El dinero conseguido se bonifica con <span></span> y cada segundo
-                que conseguiste mantenerte con vida con <span></span>.
-            </p>        
+            <div>
+                <div class="imgExpl">
+                    <img src="./img/timeBar.png" alt="">
+                </div>    
+                <p>
+                    Al final del juego tendras un tablero de puntos. Cada recoleccion de metanfetamina realizada se bonifica con <span></span> puntos.
+                    Cada venta de Meta con <span></span> pero los sobornos te restan <span></span>. El dinero conseguido se bonifica con <span></span> y cada segundo
+                    que conseguiste mantenerte con vida con <span></span>.
+                </p>        
+            </div>
             <div class="button-box-expln">
                 <button onclick="startGame()">Jugar</button>
                 <button onclick="renderScreens('start')">Volver</button>
@@ -76,20 +81,22 @@
         </div>
         <div class="game-over" id="gameOver">
             <h1 class="game-over-title">Game Over</h1>
-            <p>Total Meth collected: <span id="methCollected"></span></p>
-            <p>Meth Score: <span id="finalMethScore"></span></p>
+            <p>Total de meta recolectada: <span id="methCollected"></span></p>
+            <p>Puntos: <span id="finalMethScore"></span></p>
             <hr>
-            <p>Total Money win: <span id="moneyWin"></span></p>
-            <p>Money Score: <span id="finalMoneyScore"></span></p>
+            <p>Total de dinero ganado: <span id="moneyWin"></span></p>
+            <p>Puntos: <span id="finalMoneyScore"></span></p>
             <hr>
-            <p>Total Police Bribey: <span id="policeBribery"></span></span></p>
-            <p>Bribery Score: <span id="briberyScore"></span></p>
+            <p>Total de sobornos a policias: <span id="policeBribery"></span></span></p>
+            <p>Puntos: <span id="briberyScore"></span></p>
             <hr>
-            <p>Total Game Time: <span id="gameTotalTime"></span></p>
-            <p>Time Score: <span id="timeScoreShow"></span></p>
-            <h2>Final Score: <span id="finalScore"></span></h2>
-            <div>
-                <button onclick="startGame()">Play Again</button>
+            <p>Total de tiempo jugado: <span id="gameTotalTime"></span></p>
+            <p>Puntos: <span id="timeScoreShow"></span></p>
+            <h2>Puntaje Final: <span id="finalScore"></span></h2>
+            
+            <div class="button-box">
+                <button onclick="startGame()">Jugar</button>
+                <button onclick="renderScreens('start')">Volver</button>
             </div>
         </div>
     </div>

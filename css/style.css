@@ -1,3 +1,6 @@
+@import url(./PublicPixel-z84yD.ttf);
+
+
 body {
     margin: 0;
     max-height: 100%;
@@ -11,15 +14,119 @@ body {
 
 #contenedor {
     height: 100%;
-    overflow-y: hidden; 
+    overflow-y: hidden;
     overflow-x: hidden;
 }
 
 body {
-    overflow-y: hidden; 
+    overflow-y: hidden;
     overflow-x: hidden;
 }
 
+/****************************************
+ *
+ *  GAME WELLCOME AND EXPLANATION
+ *
+ ******************************************/
+.background-start-screen {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.423);
+    z-index: 50;
+    visibility: visible;
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: rgb(45, 42, 34);
+}
+
+.start-screen {
+    height: 600px;
+    width: 800px;
+    background: url('../img/game_start.png');
+    background-position: center center;
+    background-size: cover;
+    z-index: 51;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    top: 2%;
+    box-shadow: 0px 0px 67px 26px rgba(0,0,0,0.71);
+    border-radius: 5px;
+}
+.game-over{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 600px;
+    width: 800px;
+    background: url('../img/gamo_over.png');
+    background-position: center center;
+    background-size: cover;
+    z-index: 51;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    top: 2%;
+    box-shadow: 0px 0px 67px 26px rgba(0,0,0,0.71);
+    border-radius: 5px;
+}
+.game-over h1,p,h2{
+    text-align: center;
+}
+.game-over div{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.game-over button{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.game-over button:hover{
+    transform: scale(1.05);
+}
+.game-over p{
+    margin: 2px;
+}
+.game-over hr{
+    width:30%;
+    border: 1px solid rgb(93, 88, 73);
+}
+.game-over span{
+    color: brown;
+    font-weight: 800;
+}
+.button-box {
+    top: 80%;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    /* z-index: 50; */
+    /* position: absolute; */
+    padding: 10px;
+    width: 250px;
+    margin: 20px;
+    font-family: pixce;
+    font-size: 24px;
+    border: 3px solid rgb(93, 88, 73);
+    background: rgba(255, 255, 255, 0.616);
+    color: rgb(93, 88, 73);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    /* border-radius: 4px; */
+}
+button:hover{
+    transform: scale(1.05);
+}
 
 /****************************************
  *
@@ -48,15 +155,18 @@ body {
         background-position: 1280px;
     }
 }
-@keyframe nocheDia{
-    0% { 
+
+@keyframe nocheDia {
+    0% {
         filter: hue-rotate(30deg) brightness(50%);
     }
+
     100% {
         filter: hue-rotate(0deg) brightness(100%);
     }
 }
-#farMountain{
+
+#farMountain {
     width: 100em;
     height: 100px;
     position: absolute;
@@ -68,7 +178,8 @@ body {
     filter: brightness(75%);
 
 }
-#flatMountain{
+
+#flatMountain {
     width: 100em;
     height: 100px;
     position: absolute;
@@ -79,6 +190,7 @@ body {
     animation: flatMountain 110s linear infinite;
     filter: brightness(75%);
 }
+
 @keyframes flatMountain {
     0% {
         background-position: 0
@@ -88,7 +200,8 @@ body {
         background-position: 1997px
     }
 }
-#stones1{
+
+#stones1 {
     width: 100%;
     height: calc(312px * 0.08);
     position: absolute;
@@ -98,8 +211,9 @@ body {
     background-size: calc(12000px * 0.08) calc(312px * 0.08);
     animation: stones1 49s linear infinite;
     filter: brightness(60%);
-    
+
 }
+
 @keyframes stones1 {
     0% {
         background-position: 0
@@ -109,7 +223,8 @@ body {
         background-position: calc(12000px * 0.08)
     }
 }
-#stones2{
+
+#stones2 {
     width: 100%;
     height: calc(296px * 0.15);
     position: absolute;
@@ -120,6 +235,7 @@ body {
     animation: stones2 50s linear infinite;
     filter: brightness(70%);
 }
+
 @keyframes stones2 {
     0% {
         background-position: 0
@@ -129,7 +245,8 @@ body {
         background-position: calc(10791px * 0.15)
     }
 }
-#stones3{
+
+#stones3 {
     width: 100%;
     height: calc(305px * 0.20);
     position: absolute;
@@ -140,6 +257,7 @@ body {
     animation: stones3 30s linear infinite;
     filter: brightness(84%);
 }
+
 @keyframes stones3 {
     0% {
         background-position: 0
@@ -149,7 +267,8 @@ body {
         background-position: calc(9491px * 0.20)
     }
 }
-#stones4{
+
+#stones4 {
     width: 100%;
     height: calc(336px * 0.50);
     position: absolute;
@@ -159,8 +278,9 @@ body {
     background: url('../img/stones_background_4.png') repeat-x;
     background-size: calc(7007px * 0.50) calc(336px * 0.50);
     animation: stones4 28s linear infinite;
-    
+
 }
+
 @keyframes stones4 {
     0% {
         background-position: 0;
@@ -184,6 +304,7 @@ body {
     animation: piso 12s linear infinite;
 
 }
+
 @keyframes piso {
     0% {
         background-position: 0
@@ -194,13 +315,13 @@ body {
     }
 }
 
-#ground{
+#ground {
     z-index: 3;
     position: absolute;
     top: 34%;
     height: 55%;
-    width:100%;
-    background: linear-gradient(180deg, rgba(174,123,70,1) 0%, rgba(236,193,148,1) 100%);
+    width: 100%;
+    background: linear-gradient(180deg, rgba(174, 123, 70, 1) 0%, rgba(236, 193, 148, 1) 100%);
 }
 
 
@@ -212,7 +333,7 @@ body {
  ****************************************/
 
 
-#lab-movil{
+#lab-movil {
     width: calc(376px * 2);
     height: calc(140px * 2);
     z-index: 8;
@@ -224,8 +345,10 @@ body {
     background-repeat: no-repeat;
     animation: piso 1.9s linear infinite;
 }
+
 #personaje {
-    width: 180px; height: 216px;
+    width: 180px;
+    height: 216px;
     z-index: 10;
     position: absolute;
     background-size: 216px 900px;
@@ -239,27 +362,29 @@ body {
 }
 
 .saltar {
-    animation: saltar 800ms cubic-bezier(0,0,.5,1) forwards; 
+    animation: saltar 800ms cubic-bezier(0, 0, .5, 1) forwards;
 }
 
 .caer {
-    animation: caer 600ms cubic-bezier(0,0,.5,1) forwards;
+    animation: caer 600ms cubic-bezier(0, 0, .5, 1) forwards;
 }
 
 @keyframes saltar {
     from {
         bottom: 18%;
     }
+
     to {
         bottom: 50%;
     }
-   
+
 }
 
 @keyframes caer {
     from {
         bottom: 50%;
     }
+
     to {
         bottom: 18%;
     }
@@ -275,14 +400,16 @@ body {
         background-position: -900px
     }
 }
+
 .enemigo {
     z-index: 10;
     position: absolute;
-    bottom: 20%; width: 88px;
+    bottom: 20%;
+    width: 88px;
     height: 88px;
     background-size: 88px 352px;
     animation: enemigo 5.5s forwards linear, correrEnemigo .4s steps(4) infinite;
-    background: url("../img/jack.png") ;
+    background: url("../img/jack.png");
     background-repeat: no-repeat;
     transform: scale(2);
     border-radius: 20%;
@@ -291,7 +418,6 @@ body {
 @keyframes correrEnemigo {
     0% {
         background-position: 0px
-
     }
 
     100% {
@@ -303,21 +429,23 @@ body {
 @keyframes enemigo {
 
     from {
-      left: -10%;
+        left: -10%;
     }
+
     to {
-      left: 100%;
+        left: 100%;
     }
 }
 
 .cliente {
     z-index: 10;
     position: absolute;
-    bottom: 12%; 
-    width: 134px; height: 216px;
+    bottom: 12%;
+    width: 134px;
+    height: 216px;
     background-size: 216px 1072px;
     animation: enemigo 5.5s forwards linear, correrCliente .8s steps(8) infinite;
-    background: url("../img/client.png") ;
+    background: url("../img/client.png");
     background-repeat: no-repeat;
     border-radius: 20%;
 }
@@ -325,7 +453,6 @@ body {
 @keyframes correrCliente {
     0% {
         background-position: 0px
-
     }
 
     100% {
@@ -333,7 +460,7 @@ body {
     }
 }
 
-.things{
+.things {
     position: absolute;
     bottom: 13%;
     animation: things 5.5s forwards linear;
@@ -344,15 +471,17 @@ body {
     from {
         left: -5%;
     }
+
     to {
         left: 100%;
     }
-   
+
 }
-.meth{
+
+.meth {
     width: calc(388px * 0.15);
     height: calc(221px * 0.15);
-    background: url("../img/meth.png") ;
+    background: url("../img/meth.png");
     background-size: contain;
     background-repeat: no-repeat;
     z-index: 9;
@@ -365,11 +494,12 @@ body {
  *
  ****************************************/
 
- 
-#methBar{
+
+#methBar {
     position: absolute;
-    width: 125px; height: 44px;
-    background: url("../img/methScore.png") ;
+    width: 125px;
+    height: 44px;
+    background: url("../img/methScore.png");
     background-size: 125px 44px;
     background-repeat: no-repeat;
     top: 20px;
@@ -377,7 +507,7 @@ body {
     z-index: 20;
 }
 
-#methScore{
+#methScore {
     position: absolute;
     width: 55px;
     top: -8px;
@@ -388,7 +518,8 @@ body {
     z-index: 21;
     text-align: center;
 }
-#timeScore{
+
+#timeScore {
     position: absolute;
     width: 55px;
     top: -8px;
@@ -399,7 +530,8 @@ body {
     z-index: 21;
     text-align: center;
 }
-#moneyScore{
+
+#moneyScore {
     position: absolute;
     width: 82px;
     top: -8px;
@@ -410,40 +542,48 @@ body {
     z-index: 21;
     text-align: center;
 }
-#moneyBar{
+
+#moneyBar {
     position: absolute;
-    width: 150px; height: 44px;
-    background: url("../img/moneyScore.png") ;
+    width: 150px;
+    height: 44px;
+    background: url("../img/moneyScore.png");
     background-size: 150px 44px;
     background-repeat: no-repeat;
     top: 65px;
     left: 20px;
     z-index: 20;
 }
-#timeBar{
+
+#timeBar {
     position: absolute;
-    width: 173px; height: 44px;
-    background: url("../img/timeBar.png") ;
+    width: 173px;
+    height: 44px;
+    background: url("../img/timeBar.png");
     background-size: 173px 44px;
     background-repeat: no-repeat;
     top: 20px;
     right: 20px;
     z-index: 20;
 }
-#lifeBar{
+
+#lifeBar {
     position: absolute;
-    width: 173px; height: 44px;
-    background: url("../img/lifeBar.png") ;
+    width: 173px;
+    height: 44px;
+    background: url("../img/lifeBar.png");
     background-size: 173px 44px;
     background-repeat: no-repeat;
     top: 65px;
     right: 20px;
     z-index: 20;
 }
-#lifeBarInside{
+
+#lifeBarInside {
     position: absolute;
-    width: 118px; height: 11px;
-    background: url("../img/lifeBarInside.png") ;
+    width: 118px;
+    height: 11px;
+    background: url("../img/lifeBarInside.png");
     background-size: 118px 11px;
     background-repeat: no-repeat;
     top: 81px;
@@ -451,23 +591,21 @@ body {
     z-index: 19;
     overflow: hidden;
 }
-#lifeBarBackground{
+
+#lifeBarBackground {
     position: absolute;
-    width: 118px; height: 11px;
-    background: url("../img/lifeBarBackground.png") ;
+    width: 118px;
+    height: 11px;
+    background: url("../img/lifeBarBackground.png");
     background-size: 118px 11px;
     background-repeat: no-repeat;
     top: 81px;
     right: 30px;
     z-index: 18;
     overflow: hidden;
+
 }
 
 
 
 
-
-button{
-    z-index: 50;
-    position: absolute;
-}

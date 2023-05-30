@@ -16,6 +16,21 @@ let ground = document.querySelector('#ground');
 let cielo = document.querySelector('#cielo');
 let piso = document.querySelector('#piso');
 
+let beginScreen     = document.querySelector('#beginScreen');
+let startScreen     = document.querySelector('#startScreen');
+let explanations    = document.querySelector('#explanations');
+let gameOver        = document.querySelector('#gameOver');
+let methCollected   = document.querySelector('#methCollected');
+let finalMethScore  = document.querySelector('#finalMethScore');
+let moneyWin        = document.querySelector('#moneyWin');
+let finalMoneyScore = document.querySelector('#finalMoneyScore');
+let policeBribery   = document.querySelector('#policeBribery');
+let briberyScore    = document.querySelector('#briberyScore');
+let gameTotalTime   = document.querySelector('#gameTotalTime');
+let timeScoreShow   = document.querySelector('#timeScoreShow');
+let finalScore      = document.querySelector('#finalScore');
+
+
 //////////////////////////////////// SetUp variables globales ///////////////////
 let runner = new Runner();
 
@@ -25,24 +40,24 @@ let frecuency = 0;
 let auxTime = 0;
 
 // ENEMY SETUP
+let totalSoborno = 0;
 const ENEMIES = 6;
 let enemiesArr = [];
 
-// ENEMY SETUP
+// CLIENT SETUP
+let totalSels = 0;
 const CLIENT = 4;
 let clientArr = [];
-// let frecuencyCLient = Math.round(getRandomNumber(randomFrecuency['min'], randomFrecuency['max']));
-// let auxTimeClient = performance.now() + (frecuencyEnemy * 1000);
 
 // METH SETUP
+let totalMeth = 0;
 let methStock = 0;
 const METH = 3;
 let methArr = [];
-// let meth_multiplexor = 1;
-// let auxTimeMeth = (performance.now() + (frecuencyEnemy * 1000)) * meth_multiplexor;
-// methScore.innerHTML = methStock;
+
 
 // MONEY SETUP
+let totalMoney = 0;
 let moneyStock = 0;
 let methCost = 200;
 let policeCometa = 1000;
@@ -54,6 +69,14 @@ let lifes = LIFE_POOL;
 
 // TIMER SETUP
 let startTime = performance.now();
+let gameTime = {'min': 0, 'seg': 0, 'ms': 0};
+
+// POINTS GAME SETUP
+const methPoints        = 100;
+const moneyPoints       = 50;
+const methSells         = 300;
+const briberyPoints     = 3000;
+const timeSecondsPoints = 5;
 
 
 
@@ -97,10 +120,8 @@ function gameLoop() {
     // verifica
     objectCollector();
 
-    // check time
+    // check lifes
     gameControl();
-
-
 }
 
 
@@ -108,11 +129,10 @@ function gameControl() {
     if (lifes == 0) {
         stopGame()
     }
-
 }
-
-
+ 
 function startGame() {
+    beginScreen.style.display = "none";
     // TIME SETUP
     startTime = performance.now();
 
@@ -147,8 +167,11 @@ function startGame() {
 
     // METH SETUP
     methStock = 0;
+    totalMeth = 0;
+    methScore.innerHTML = methStock;
 
     // MONEY SETUP
+    totalMoney = 0;
     moneyStock = 0;
     moneyScore.innerHTML = moneyStock;
 
@@ -156,46 +179,56 @@ function startGame() {
     lifes = LIFE_POOL;
     lifeBar.style.backgroundPosition = `0px`;
 
+    personaje.style.bottom = "12% !important";
+
+    // OTHERS
+    totalSels = 0;
+    totalSoborno = 0;
 }
 
 function stopGame() {
-    // DETENER INTERVALOS
-    clearInterval(game);
-    clearInterval(timerInterval);
+    stopAnimations();
+    renderScreens("game-over");
+}
 
-    // DETENER TODAS LAS ANIMACIONES
-    let animacion = farMountain.getAnimations();
-    stopAnimation(animacion);
-    animacion = flatMountain.getAnimations();
-    stopAnimation(animacion);
-    animacion = stones1.getAnimations();
-    stopAnimation(animacion);
-    animacion = stones2.getAnimations();
-    stopAnimation(animacion);
-    animacion = stones3.getAnimations();
-    stopAnimation(animacion);
-    animacion = stones4.getAnimations();
-    stopAnimation(animacion);
-    animacion = ground.getAnimations();
-    stopAnimation(animacion);
-    animacion = cielo.getAnimations();
-    stopAnimation(animacion);
-    animacion = piso.getAnimations();
-    stopAnimation(animacion);
-    animacion = personaje.getAnimations();
-    stopAnimation(animacion);
-    // enemies
-    enemiesArr.forEach((enemy) => {
-        enemy.render(false);
-    });
-    // yonki
-    clientArr.forEach((client) => {
-        client.render(false);
-    });
-    // meth
-    methArr.forEach((meth) => {
-        meth.render(false);
-    });
+function stopAnimations(){
+  // DETENER INTERVALOS
+  clearInterval(game);
+  clearInterval(timerInterval);
+
+  // DETENER TODAS LAS ANIMACIONES
+  let animacion = farMountain.getAnimations();
+  stopAnimation(animacion);
+  animacion = flatMountain.getAnimations();
+  stopAnimation(animacion);
+  animacion = stones1.getAnimations();
+  stopAnimation(animacion);
+  animacion = stones2.getAnimations();
+  stopAnimation(animacion);
+  animacion = stones3.getAnimations();
+  stopAnimation(animacion);
+  animacion = stones4.getAnimations();
+  stopAnimation(animacion);
+  animacion = ground.getAnimations();
+  stopAnimation(animacion);
+  animacion = cielo.getAnimations();
+  stopAnimation(animacion);
+  animacion = piso.getAnimations();
+  stopAnimation(animacion);
+  animacion = personaje.getAnimations();
+  stopAnimation(animacion);
+  // enemies
+  enemiesArr.forEach((enemy) => {
+      enemy.render(false);
+  });
+  // yonki
+  clientArr.forEach((client) => {
+      client.render(false);
+  });
+  // meth
+  methArr.forEach((meth) => {
+      meth.render(false);
+  });
 }
 
 function stopAnimation(animaciones) {
@@ -315,6 +348,7 @@ function colisionCheckMeth() {
                 // desaparecer metanfetamina
                 meth.render(false);
                 // scoring Meth
+                totalMeth++;
                 methStock++;
                 methScore.innerHTML = methStock;
                 // efecto viasual
@@ -337,6 +371,7 @@ function colisionCheckEnemy() {
                 enemy.render(false);
 
                 if (moneyStock >= policeCometa) {
+                    totalSoborno++;
                     moneyStock = moneyStock - policeCometa;
                     moneyScore.innerHTML = moneyStock;
                 } else {
@@ -344,7 +379,6 @@ function colisionCheckEnemy() {
                 }
                 // efecto viasual
                 // efecto de sonido
-                // aumenta vidas en juego
             }
         }
     });
@@ -360,15 +394,15 @@ function colisionCheckClient() {
             if (estanEnContacto(div, 90)) {
                 client.render(false);
 
-                console.log('client');
                 // desaparecer metanfetamina
                 if (methStock > 0) {
-
+                    totalSels++;
                     // decrece meth stock
                     methStock--;
                     methScore.innerHTML = methStock;
 
                     // increase money stock
+                    totalMoney = totalMoney + methCost;
                     moneyStock = moneyStock + methCost;
                     moneyScore.innerHTML = moneyStock;
                 } else {
@@ -377,7 +411,6 @@ function colisionCheckClient() {
 
                 // efecto viasual
                 // efecto de sonido
-                // aumenta vidas en juego
             }
         }
     });
@@ -424,6 +457,9 @@ function checkTime() {
 
     // Actualiza el contenido del elemento <h1> con el temporizador
     timeScore.innerHTML = formattedTime;
+
+    // almacena el tiempo de juego en una variable gobal
+    gameTime = {'min': minutes, 'seg': seconds, 'ms': milliseconds};
 }
 
 // Función para agregar ceros a la izquierda del tiempo si es necesario
@@ -440,4 +476,57 @@ function looseLife() {
     let position = - anchoDeBarra + ((lifes) * anchoDeBarra / LIFE_POOL);
     lifeBar.style.backgroundPosition = `${position}px`;
 }
+function renderScreens(screen){
+    switch (screen) {
+        case "start":
+            beginScreen.style.display   = 'block';
+            explanations.style.display  = 'none';
+            gameOver.style.display      = 'none';
+            startScreen.style.display   = 'flex';
+            break;
+        case "explanations":
+            beginScreen.style.display   = 'block';
+            explanations.style.display  = 'block';
+            gameOver.style.display      = 'none';
+            startScreen.style.display   = 'none';
+            break;
+        case "game-over":
+            beginScreen.style.display   = 'block';
+            explanations.style.display  = 'none';
+            gameOver.style.display      = 'flex';
+            startScreen.style.display   = 'none';
+            showPonits();
+            break;
+        // cerrar todo
+        default: 
+            beginScreen.style.display   = 'none';
+            explanations.style.display  = 'none';
+            gameOver.style.display      = 'none';
+            startScreen.style.display   = 'none';
+            break;
+    }
+}
+
+function showPonits(){
+    methCollected.innerHTML = totalMeth;
+    let methTP = totalMeth * methPoints;
+    finalMethScore.innerHTML = methTP;
+
+    moneyWin.innerHTML = totalMoney;
+    let moneyTP = totalMoney * moneyPoints;
+    finalMoneyScore.innerHTML = moneyTP;
+
+    policeBribery.innerHTML = totalSoborno;
+    let briberyTP = totalSoborno * briberyPoints;
+    briberyScore.innerHTML = briberyTP;
+
+    gameTotalTime.innerHTML = `${padTime(gameTime['min'])}:${padTime(gameTime['seg'])}:${gameTime['ms']}`;
+    let timeTP = (gameTime['min'] * 60 + gameTime['seg']) * timeSecondsPoints;
+    timeScoreShow.innerHTML = timeTP;
+    finalScore.innerHTML = methTP + moneyTP + briberyTP + timeTP
+}
+
+stopAnimations();
+// renderScreens('game-over');
+renderScreens('start');
 

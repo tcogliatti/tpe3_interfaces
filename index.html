@@ -12,12 +12,42 @@
 </head>
 <body>
 
+    <!-- game screens: start, game over and explanations -->
+    <div class="background-start-screen" id="beginScreen">
+        <div class="start-screen" id="startScreen">
+            <div class="button-box">
+                <button onclick="startGame()" style="z-index: 21;">Play</button>
+                <button>How to Play</button>
+            </div>
+        </div>
+        <div class="explanations" id="explanations">
+
+        </div>
+        <div class="game-over" id="gameOver">
+            <h1 class="game-over-title">Game Over</h1>
+            <p>Total Meth collected: <span id="methCollected"></span></p>
+            <p>Meth Score: <span id="finalMethScore"></span></p>
+            <hr>
+            <p>Total Money win: <span id="moneyWin"></span></p>
+            <p>Money Score: <span id="finalMoneyScore"></span></p>
+            <hr>
+            <p>Total Police Bribey: <span id="policeBribery"></span></span></p>
+            <p>Bribery Score: <span id="briberyScore"></span></p>
+            <hr>
+            <p>Total Game Time: <span id="gameTotalTime"></span></p>
+            <p>Time Score: <span id="timeScoreShow"></span></p>
+            <h2>Final Score: <span id="finalScore"></span></h2>
+            <div>
+                <button onclick="startGame()" style="z-index: 21;">Play Again</button>
+            </div>
+        </div>
+    </div>
+
     <div id="contenedor">
         <!-- game controls -->
-        <button onclick="startGame()" style="z-index: 21;">Play</button>
         <div id="methBar"><h1 id="methScore">0</h1></div>
-        <div id="moneyBar"><h1 id="moneyScore"></h1></div>
-        <div id="timeBar"><h1 id="timeScore"></h1></div>
+        <div id="moneyBar"><h1 id="moneyScore">0</h1></div>
+        <div id="timeBar"><h1 id="timeScore">00:00:00</h1></div>
         <div id="lifeBar"></div>
         <div id="lifeBarInside"></div>
         <div id="lifeBarBackground"></div>

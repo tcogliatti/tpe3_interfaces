@@ -8,13 +8,6 @@
   }
 
 /*
-*   VARIABLES
-*/
-:root {
-    --speed-animation: 5.5s;
-  }
-
-/*
 * ESTILOS GLOBALES
 */
 body {
@@ -27,7 +20,10 @@ body, button {
 
 #contenedor,
 #cielo,
-#piso {
+#piso,
+#flatMountain,
+#farMountain,
+#ground {
     width: 100%;
 }
 
@@ -101,6 +97,7 @@ body {
     top: 2%;
     box-shadow: 0px 0px 67px 26px rgba(0,0,0,0.71);
     border-radius: 5px;
+    padding-left: 30px;
 }
 .game-over h1,p,h2{
     text-align: center;
@@ -229,11 +226,11 @@ button:hover{
 }
 
 #farMountain {
-    width: 100em;
     height: 100px;
     position: absolute;
     z-index: 3;
-    top: 19%;
+    /* top: 19%; */
+    bottom: 64.5%;
     background: url('../img/far_mountain.png');
     background-size: 1997px 100%;
     animation: flatMountain 150s linear infinite;
@@ -242,11 +239,11 @@ button:hover{
 }
 
 #flatMountain {
-    width: 100em;
     height: 100px;
     position: absolute;
     z-index: 4;
-    top: 19.5%;
+    /* top: 19.5%; */
+    bottom: 65%;
     background: url('../img/flat_mountain.png');
     background-size: 1997px 100%;
     animation: flatMountain 110s linear infinite;
@@ -268,12 +265,11 @@ button:hover{
     height: calc(312px * 0.08);
     position: absolute;
     z-index: 5;
-    top: 34%;
+    bottom: 62%;
     background: url('../img/stones_background_1.png') repeat-x;
     background-size: calc(12000px * 0.08) calc(312px * 0.08);
     animation: stones1 49s linear infinite;
     filter: brightness(60%);
-
 }
 
 @keyframes stones1 {
@@ -291,7 +287,7 @@ button:hover{
     height: calc(296px * 0.15);
     position: absolute;
     z-index: 6;
-    top: 37%;
+    bottom: 56%;
     background: url('../img/stones_background_2.png') repeat-x;
     background-size: calc(10791px * 0.15) calc(296px * 0.15);
     animation: stones2 50s linear infinite;
@@ -313,7 +309,7 @@ button:hover{
     height: calc(305px * 0.20);
     position: absolute;
     z-index: 7;
-    top: 45%;
+    bottom: 45%;
     background: url('../img/stones_background_3.png') repeat-x;
     background-size: calc(9491px * 0.20) calc(305px * 0.20);
     animation: stones3 30s linear infinite;
@@ -336,7 +332,7 @@ button:hover{
     position: absolute;
     z-index: 8;
     background-position: 0;
-    top: 45%;
+    bottom: 24%;
     background: url('../img/stones_background_4.png') repeat-x;
     background-size: calc(7007px * 0.50) calc(336px * 0.50);
     animation: stones4 28s linear infinite;
@@ -380,8 +376,9 @@ button:hover{
 #ground {
     z-index: 3;
     position: absolute;
-    top: 34%;
-    height: 55%;
+    /* top: 34%; */
+    top: 35%;
+    height: 70%;
     width: 100%;
     background: linear-gradient(180deg, rgba(174, 123, 70, 1) 0%, rgba(236, 193, 148, 1) 100%);
 }
@@ -394,27 +391,13 @@ button:hover{
  *
  ****************************************/
 
-
-#lab-movil {
-    width: calc(376px * 2);
-    height: calc(140px * 2);
-    z-index: 8;
-    position: absolute;
-    background-size: calc(140px * 2) calc(376px * 2);
-    bottom: 7%;
-    right: 50px;
-    background: url("../img/lab_movil.png");
-    background-repeat: no-repeat;
-    animation: piso 1.9s linear infinite;
-}
-
 #personaje {
     width: 180px;
     height: 216px;
     z-index: 10;
     position: absolute;
     background-size: 216px 900px;
-    bottom: 12%;
+    bottom: 50px;
     right: 50px;
     background: url("../img/walters-walk.png") repeat-x;
 }
@@ -433,22 +416,22 @@ button:hover{
 
 @keyframes saltar {
     from {
-        bottom: 18%;
+        bottom: 50px;
     }
 
     to {
-        bottom: 50%;
+        bottom: 300px;
     }
 
 }
 
 @keyframes caer {
     from {
-        bottom: 50%;
+        bottom: 300px;
     }
 
     to {
-        bottom: 18%;
+        bottom: 50px;
     }
 }
 
@@ -466,11 +449,11 @@ button:hover{
 .enemigo {
     z-index: 10;
     position: absolute;
-    bottom: 20%;
+    bottom: 100px;
     width: 88px;
     height: 88px;
     background-size: 88px 352px;
-    animation: enemigo var(--speed-animation) forwards linear, correrEnemigo .4s steps(4) infinite;
+    animation: enemigo 5.5s forwards linear, correrEnemigo .4s steps(4) infinite;
     background: url("../img/jack.png");
     background-repeat: no-repeat;
     transform: scale(2);
@@ -502,11 +485,11 @@ button:hover{
 .cliente {
     z-index: 10;
     position: absolute;
-    bottom: 12%;
+    bottom: 50px;
     width: 134px;
     height: 216px;
     background-size: 216px 1072px;
-    animation: enemigo var(--speed-animation) forwards linear, correrCliente .8s steps(8) infinite;
+    animation: enemigo 5.5s forwards linear, correrCliente .8s steps(8) infinite;
     background: url("../img/client.png");
     background-repeat: no-repeat;
     border-radius: 20%;
@@ -524,8 +507,8 @@ button:hover{
 
 .things {
     position: absolute;
-    bottom: 13%;
-    animation: things var(--speed-animation) forwards linear;
+    bottom: 50px;
+    animation: things 5.5s forwards linear;
 
 }
 

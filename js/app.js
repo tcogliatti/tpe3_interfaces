@@ -35,7 +35,8 @@ let finalScore      = document.querySelector('#finalScore');
 let runner = new Runner();
 
 // RANDOM TIME SETUP
-let randomFrecuency = { 'min': 1, 'max': 3.5 };
+const maxRandomFrecuency = 3.5;
+let randomFrecuency = { 'min': 1, 'max': maxRandomFrecuency };
 let frecuency = 0;
 let auxTime = 0;
 
@@ -75,7 +76,7 @@ let gameTime = {'min': 0, 'seg': 0, 'ms': 0};
 const methPoints        = 100;
 const moneyPoints       = 50;
 const methSells         = 300;
-const briberyPoints     = 3000;
+const briberyPoints     = 500;
 const timeSecondsPoints = 5;
 
 // SOUND SETUP
@@ -84,15 +85,15 @@ const ouch1Sound = new Audio('../sound/ouch.mp3');
 const sobornoSound = new Audio('../sound/soborno.mp3');
 const sellSound = new Audio('../sound/sell.mp3');
 const gameMusic = new Audio('../sound/gameMusic.mp3');
-gameMusic.looop = true;
+gameMusic.loop = true;
 const wellcameMusic = new Audio('../sound/wellcameMusic.mp3');
 wellcameMusic.loop = true;
 
 // SPEED GAME SETUP
 const initSpeedGame = 5.5;
-const frecencyIncrese = 5000;
+const frecencyIncrese = 10000;
 // const frecencyIncrese = 15000;
-const amountIncrese = 0.3;
+const amountIncrese = 0.1;
 let speedGame = initSpeedGame;
 
 //////////////////////////////////// GAME ///////////////////////////////////
@@ -101,6 +102,24 @@ let game = setInterval(gameLoop, 50);
 function gameLoop() {
 
     // Create random elements in random time
+    createElements();
+
+    // verifica si recolecta metanfetamina
+    colisionCheckMeth();
+
+    // verifica si recolecta metanfetamina
+    colisionCheckEnemy();
+
+    // verifica si se encontro con un cliente
+    colisionCheckClient()
+
+    // verifica
+    objectCollector();
+
+    // check lifes
+    gameControl();
+}
+ function createElements(){
     if (performance.now() >= auxTime) {
         // recalculo el tiempo del proximo evento
         frecuency = getRandomNumber(randomFrecuency['min'], randomFrecuency['max']);
@@ -121,22 +140,7 @@ function gameLoop() {
             methCreator();
     }
 
-    // verifica si recolecta metanfetamina
-    colisionCheckMeth();
-
-    // verifica si recolecta metanfetamina
-    colisionCheckEnemy();
-
-    // verifica si se encontro con un cliente
-    colisionCheckClient()
-
-    // verifica
-    objectCollector();
-
-    // check lifes
-    gameControl();
-}
-
+ }
 
 function gameControl() {
     if (lifes == 0) {
@@ -149,15 +153,44 @@ function gameControl() {
  */
 let speedGameInterval = setInterval(speedGameFunction, frecencyIncrese);
 function speedGameFunction() {
-    speedGame = speedGame + amountIncrese;
-    speedGame = Math.ceil(speedGame * 10) / 10; 
-    // console.log(speedGame, document.documentElement.style.getPropertyValue('--speed-animation'));
-    // document.documentElement.style.setProperty('--speed-animation', `${speedGame}s`);
+    speedGame = speedGame - amountIncrese;
+    speedGame = Math.ceil(speedGame * 10) / 10;
+    
+    //setea la velocidad de los personajes
+    setSpeed(speedGame);
+
+    // disminuye el tiempo máximo del random de generar elementos
+    randomFrecuency['max'] = randomFrecuency['max'] - amountIncrese;
+
+}
+function setSpeed(speed){
+ // Enemigo
+ enemiesArr.forEach((enemy) => {
+    enemy.getDiv().style.animation = `enemigo ${speed}s forwards linear, correrEnemigo .4s steps(4) infinite`;
+ });
+ // Cliente
+ clientArr.forEach((client) =>{
+    client.getDiv().style.animation = `enemigo ${speed}s forwards linear, correrCliente .8s steps(8) infinite`;
+ });
+ // Metha
+ methArr.forEach((meth) =>{
+    meth.getDiv().style.animation = `things ${speed}s forwards linear`
+ });
 }
 
+
+
+/*
+    procedimiento que da inicio a juego
+*/
+
 function startGame() {
-    // SPEED GAME 
+    // INIT PERSONAJE PRINCIPAL
+    // document.addEventListener('keydown', saltar);
+
+    // SET INIT SPEED GAME 
     speedGame = initSpeedGame;
+    setSpeed(speedGame);
 
     // INICIAR MUSICA
     gameMusic.currentTime = 0;
@@ -199,6 +232,7 @@ function startGame() {
 
     // FRECUENCY SETUP
     auxTime = 0;
+    randomFrecuency['max'] = maxRandomFrecuency;
 
     // METH SETUP
     methStock = 0;
@@ -220,8 +254,12 @@ function startGame() {
     totalSels = 0;
     totalSoborno = 0;
 }
-
+/**
+ * GAME OVER
+ * este procedimiento detiene todas las animaciones y lleva a la pantalla de game over
+ */
 function stopGame() {
+    // document.removeEventListener('keydown', saltar);
     gameMusic.pause();
     wellcameMusic.currentTime = 0;
     wellcameMusic.play();
@@ -270,6 +308,9 @@ function stopAnimations(){
   });
 }
 
+
+// funciones que detienen las animaciones de las colecciones que se pasan 
+// como parametro
 function stopAnimation(animaciones) {
     animaciones.forEach((animacion) => {
         animacion.pause();
@@ -281,12 +322,101 @@ function startAnimation(animaciones) {
     });
 }
 
+// procedimiento que se encarga de renderizar la barra de vidas y manejar la variable lifes
+function looseLife() {
+    // resta una vida
+    lifes--;
+
+    // control life bar
+    let anchoDeBarra = lifeBar.offsetWidth;
+    let position = - anchoDeBarra + ((lifes) * anchoDeBarra / LIFE_POOL);
+    lifeBar.style.backgroundPosition = `${position}px`;
+}
+
+
+
+/**
+ * Función tipo router
+ * se encarga de esconder y renderizar las pantallas correspondientes
+ * @param {String} screen 
+ */
+function renderScreens(screen){
+    switch (screen) {
+        case "start":
+            beginScreen.style.display   = 'block';
+            explanations.style.display  = 'none';
+            gameOver.style.display      = 'none';
+            startScreen.style.display   = 'flex';
+            break;
+        case "explanations":
+            beginScreen.style.display   = 'block';
+            explanations.style.display  = 'flex';
+            gameOver.style.display      = 'none';
+            startScreen.style.display   = 'none';
+            break;
+        case "game-over":
+            beginScreen.style.display   = 'block';
+            explanations.style.display  = 'none';
+            gameOver.style.display      = 'flex';
+            startScreen.style.display   = 'none';
+            showPonits();
+            break;
+        // cerrar todo
+        default: 
+            beginScreen.style.display   = 'none';
+            explanations.style.display  = 'none';
+            gameOver.style.display      = 'none';
+            startScreen.style.display   = 'none';
+            break;
+    }
+}
+
+/**
+ * Pagina de puntajes
+ * Procedimiento encargado de calcular y renderizar los puntajes del final del juego
+ */
+function showPonits(){
+    methCollected.innerHTML = totalMeth;
+    let methTP = totalMeth * methPoints;
+    finalMethScore.innerHTML = methTP;
+
+    moneyWin.innerHTML = moneyStock;
+    // moneyWin.innerHTML = totalMoney;
+    let moneyTP = moneyStock * moneyPoints;
+    // let moneyTP = totalMoney * moneyPoints;
+    finalMoneyScore.innerHTML = moneyTP;
+
+    policeBribery.innerHTML = totalSoborno;
+    let briberyTP = totalSoborno * briberyPoints;
+    briberyScore.innerHTML = '-'+briberyTP;
+
+    gameTotalTime.innerHTML = `${padTime(gameTime['min'])}:${padTime(gameTime['seg'])}:${gameTime['ms']}`;
+    let timeTP = (gameTime['min'] * 60 + gameTime['seg']) * timeSecondsPoints;
+    timeScoreShow.innerHTML = timeTP;
+    finalScore.innerHTML = methTP + moneyTP - briberyTP + timeTP
+}
+/**
+ * Pagina de como jugar
+ * procedimiento encatfado de mostrar como jugar
+ * tambien se encarga de mostrar los valores y puntos correspondientes a cada elemento
+ */
+function showHowToPlay(){
+    renderScreens("explanations")
+    let data = document.querySelectorAll('#explanations span');
+    data[0].innerHTML = methCost;
+    data[1].innerHTML = policeCometa;
+    data[2].innerHTML = methPoints;
+    data[3].innerHTML = methSells;
+    data[4].innerHTML = briberyPoints;
+    data[5].innerHTML = moneyPoints;
+    data[6].innerHTML = timeSecondsPoints;
+
+}
 
 //////////////////////////////////// PERSONAJE PRINCIPAL ////////////////////////
-document.addEventListener('keydown', () => {
+function saltar(){
     runner.saltar();
-});
-
+}
 
 
 
@@ -304,6 +434,32 @@ function enemyCreator() {
         }
     }
 }
+/**
+ * Procedimiento que recorre todos enemigos para chekear colision con el presonaje
+ */
+function colisionCheckEnemy() {
+    enemiesArr.forEach((enemy) => {
+        if (enemy.status != "none") {
+            let div = enemy.getDiv();
+            if (estanEnContacto(div, 90)) {
+                
+                // desaparecer policia
+                enemy.render(false);
+
+                if (moneyStock >= policeCometa) {
+                    totalSoborno++;
+                    moneyStock = moneyStock - policeCometa;
+                    moneyScore.innerHTML = moneyStock;
+                    sobornoSound.play();
+                } else {
+                    looseLife();
+                    ouch1Sound.play();
+                }
+            }
+        }
+    });
+}
+
 
 //////////////////////////////////// CLIENTE ////////////////////////////////////
 // genera el array de clientes
@@ -319,6 +475,39 @@ function clientCreator() {
         }
     }
 }
+/**
+ * Procedimiento que recorre todos enemigos para chekear colision con el presonaje
+ */
+function colisionCheckClient() {
+    clientArr.forEach((client) => {
+        if (client.status != "none") {
+            let div = client.getDiv();
+            if (estanEnContacto(div, 90)) {
+                client.render(false);
+
+                // desaparecer metanfetamina
+                if (methStock > 0) {
+                    totalSels++;
+                    
+                    // decrece meth stock
+                    methStock--;
+                    methScore.innerHTML = methStock;
+
+                    // increase money stock
+                    totalMoney = totalMoney + methCost;
+                    moneyStock = moneyStock + methCost;
+                    moneyScore.innerHTML = moneyStock;
+                    
+                    // sonido de venta 
+                    sellSound.play();
+                } else {
+                    looseLife();
+                    ouch1Sound.play();
+                }
+            }
+        }
+    });
+}
 
 //////////////////////////////////// METH ////////////////////////////////////
 // genera el array de enemigos
@@ -333,11 +522,41 @@ function methCreator() {
             break;
         }
     }
-
 }
 
-//////////////////////////////////// Auxiliares ////////////////////////////////////
+/**
+ * Procedimiento que recorre todas las metanfetaminas para chekear si estan en 
+ * colisión con el personaje
+ */
+function colisionCheckMeth() {
+    methArr.forEach((meth) => {
+        if (meth.status != "none") {
+            let div = meth.getDiv();
+            if (estanEnContacto(div, 0)) {
+                
+                // desaparecer metanfetamina
+                meth.render(false);
+                
+                // scoring Meth
+                totalMeth++;
+                methStock++;
+                methScore.innerHTML = methStock;
 
+                // efecto de sonido
+                methSound.play();
+            }
+
+        }
+    });
+}
+
+
+
+//////////////////////////////////// Auxiliares ////////////////////////////////////
+/**
+ * PROCEDIMIENTO que verifica si cada objeto se encuentra en el lateral derecho de
+ * la pantalla. Si es así lo esconde
+ */
 function objectCollector() {
     // enemies
     enemiesArr.forEach((enemy) => {
@@ -376,94 +595,6 @@ function getRandomNumber(min, max) {
 }
 
 /**
- * Procedimiento que recorre todas las metanfetaminas para chekear si estan en 
- * colisión con el personaje
- */
-function colisionCheckMeth() {
-    methArr.forEach((meth) => {
-        if (meth.status != "none") {
-            let div = meth.getDiv();
-            if (estanEnContacto(div, 0)) {
-                // desaparecer metanfetamina
-                meth.render(false);
-                // scoring Meth
-                totalMeth++;
-                methStock++;
-                methScore.innerHTML = methStock;
-                // efecto viasual
-
-                // efecto de sonido
-                methSound.play();
-            }
-
-        }
-    });
-}
-
-/**
- * Procedimiento que recorre todos enemigos para chekear colision con el presonaje
- */
-function colisionCheckEnemy() {
-    enemiesArr.forEach((enemy) => {
-        if (enemy.status != "none") {
-            let div = enemy.getDiv();
-            if (estanEnContacto(div, 90)) {
-                // desaparecer policia
-                enemy.render(false);
-
-                if (moneyStock >= policeCometa) {
-                    totalSoborno++;
-                    moneyStock = moneyStock - policeCometa;
-                    moneyScore.innerHTML = moneyStock;
-                    sobornoSound.play();
-                } else {
-                    looseLife();
-                    ouch1Sound.play();
-                }
-                // efecto viasual
-            }
-        }
-    });
-}
-
-/**
- * Procedimiento que recorre todos enemigos para chekear colision con el presonaje
- */
-function colisionCheckClient() {
-    clientArr.forEach((client) => {
-        if (client.status != "none") {
-            let div = client.getDiv();
-            if (estanEnContacto(div, 90)) {
-                client.render(false);
-
-                // desaparecer metanfetamina
-                if (methStock > 0) {
-                    totalSels++;
-                    // decrece meth stock
-                    methStock--;
-                    methScore.innerHTML = methStock;
-
-                    // increase money stock
-                    totalMoney = totalMoney + methCost;
-                    moneyStock = moneyStock + methCost;
-                    moneyScore.innerHTML = moneyStock;
-                    
-                    // sonido de venta 
-                    sellSound.play();
-                } else {
-                    looseLife();
-                    ouch1Sound.play();
-                }
-
-                // efecto viasual
-                
-            }
-        }
-    });
-}
-
-
-/**
  * determina si la posición de un objeto pasado por parametro entro en 
  * colición con el personaje principal del juego
  * 
@@ -483,9 +614,7 @@ function estanEnContacto(objeto, tolerance) {
     );
 }
 
-
 // Actualiza el temporizador en intervalos regulares (cada 10 ms)
-
 let timerInterval = setInterval(checkTime, 10);
 function checkTime() {
     // Calcula el tiempo transcurrido desde el momento inicial
@@ -513,80 +642,11 @@ function padTime(value, length = 2) {
     return value.toString().padStart(length, '0');
 }
 
-function looseLife() {
-    // resta una vida
-    lifes--;
 
-    // control life bar
-    let anchoDeBarra = lifeBar.offsetWidth;
-    let position = - anchoDeBarra + ((lifes) * anchoDeBarra / LIFE_POOL);
-    lifeBar.style.backgroundPosition = `${position}px`;
-}
-function renderScreens(screen){
-    switch (screen) {
-        case "start":
-            beginScreen.style.display   = 'block';
-            explanations.style.display  = 'none';
-            gameOver.style.display      = 'none';
-            startScreen.style.display   = 'flex';
-            break;
-        case "explanations":
-            beginScreen.style.display   = 'block';
-            explanations.style.display  = 'flex';
-            gameOver.style.display      = 'none';
-            startScreen.style.display   = 'none';
-            break;
-        case "game-over":
-            beginScreen.style.display   = 'block';
-            explanations.style.display  = 'none';
-            gameOver.style.display      = 'flex';
-            startScreen.style.display   = 'none';
-            showPonits();
-            break;
-        // cerrar todo
-        default: 
-            beginScreen.style.display   = 'none';
-            explanations.style.display  = 'none';
-            gameOver.style.display      = 'none';
-            startScreen.style.display   = 'none';
-            break;
-    }
-}
 
-function showPonits(){
-    methCollected.innerHTML = totalMeth;
-    let methTP = totalMeth * methPoints;
-    finalMethScore.innerHTML = methTP;
 
-    moneyWin.innerHTML = moneyStock;
-    // moneyWin.innerHTML = totalMoney;
-    let moneyTP = moneyStock * moneyPoints;
-    // let moneyTP = totalMoney * moneyPoints;
-    finalMoneyScore.innerHTML = moneyTP;
 
-    policeBribery.innerHTML = totalSoborno;
-    let briberyTP = totalSoborno * briberyPoints;
-    briberyScore.innerHTML = '-'+briberyTP;
-
-    gameTotalTime.innerHTML = `${padTime(gameTime['min'])}:${padTime(gameTime['seg'])}:${gameTime['ms']}`;
-    let timeTP = (gameTime['min'] * 60 + gameTime['seg']) * timeSecondsPoints;
-    timeScoreShow.innerHTML = timeTP;
-    finalScore.innerHTML = methTP + moneyTP - briberyTP + timeTP
-}
-
-function showHowToPlay(){
-    renderScreens("explanations")
-    let data = document.querySelectorAll('#explanations span');
-    data[0].innerHTML = methCost;
-    data[1].innerHTML = policeCometa;
-    data[2].innerHTML = methPoints;
-    data[3].innerHTML = methSells;
-    data[4].innerHTML = briberyPoints;
-    data[5].innerHTML = moneyPoints;
-    data[6].innerHTML = timeSecondsPoints;
-
-}
-
+//////////////////////////////// EJECUCION INICAL CUANDO SE ENTRA A LA WEB ///////////////////////////////////////////////////
 
 stopAnimations();
 // renderScreens('game-over');
